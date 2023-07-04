@@ -16,7 +16,7 @@ if test -f "$DOTENV_FILE"; then
 
 	if [ $? == 0  ]; then  # If snapshot creation is successful
 		/usr/bin/borg prune -v --list --keep-daily=3 --keep-weekly=2 --keep-monthly=2  # Prunning older snapshots
-		/usr/bin/borg with-lock b2 sync ${BORG_REPO} b2://"${B2_BUCKET_NAME}"  # Syncing with B2 Cloud Storage's bucket
+		/usr/bin/borg with-lock ${BORG_REPO} b2 sync ${BORG_REPO} b2://"${B2_BUCKET_NAME}"  # Syncing with B2 Cloud Storage's bucket
 	fi
 
 	/usr/bin/docker start $(/usr/bin/docker ps -aq)  # Starting all stopped containers
@@ -24,3 +24,5 @@ if test -f "$DOTENV_FILE"; then
 else
 	echo "Aborting: dotenv file not found"
 fi
+
+echo -e "\nProcess ended at `date`"
